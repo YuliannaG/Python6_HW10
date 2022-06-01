@@ -23,13 +23,17 @@ def output_func(user_command):
         if command in v:
             return k(name,phone)
 
-
-user_input = input('>>>')
-user_command = normalize(user_input)
-while True:
-    result = output_func(user_command)
-    print(result)
-    if result == 'Good bye!':
-        break
+def main():
     user_input = input('>>>')
     user_command = normalize(user_input)
+    while True:
+        result = output_func(user_command)
+        print(result)
+        if result == 'Good bye!':
+            break
+        user_input = input('>>>')
+        user_command = normalize(user_input)
+
+
+if __name__ == "__main__":
+    main()
