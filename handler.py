@@ -1,6 +1,6 @@
 """Функции обработчики команд -- набор функций, которые ещё называют handler,
 они отвечают за непосредственное выполнение команд."""
-from collections import UserDict, UserList
+from collections import UserDict
 
 
 
@@ -38,7 +38,7 @@ class Record(UserDict):
 
 
     def __repr__(self):
-        return f'{name.name} : {[p.phone for p in self.phones]}'
+        return f'{self.name.name} : {[p.phone for p in self.phones]}'
 
     def add_phone(self, phone: Phone):
         if phone.phone not in [p.phone for p in self.phones]:
@@ -63,7 +63,7 @@ class AddressBook(UserDict):
     #     self.data = {}
 
     def add_record(self, record: Record):
-        self.data[record.name] = record
+        self.data[record.name.name] = record
 
 
 contacts_dict = AddressBook()
@@ -76,16 +76,18 @@ def func_hello(*args):
 def add_contact(name, phone):
     name_a = Name(name)
     phone_a = Phone(phone)
-    record_a = Record(name,phone_a)
+    record_a = Record(name_a, phone_a)
     contacts_dict.add_record(record_a)
     return f'Contact {str(name_a).capitalize()} added'
 
 
 def change_contact(name, phone, new_phone):
-    record = contacts_dict[name] #Record(contacts_dict[name])
-    record.change_phone(Phone(phone), Phone(new_phone))
-    return f'Contact {name} changed to {phone[1]}'
-
+    record = contacts_dict.get(name) #Record(contacts_dict[name])
+    print(type(record))
+    if isinstance(record, Record):
+        record.change_phone(Phone(phone), Phone(new_phone))
+        return f'Contact {name} changed number {phone} to number {new_phone}'
+    return f'Sorry, phone book has no entry with name {name}'
 
 def phone_contact(name, *args):
     return f"{name}'s number is {contacts_dict[name][name]}"
