@@ -12,24 +12,33 @@ def input_error(func):
             print('Please, enter command, name and phone number')
     return inner
 
-COMMANDS = {func_hello: 'hello', show_all: 'show all', add_contact: 'add', change_contact: 'change', phone_contact: 'phone', func_exit: ['good buy', 'close', 'exit']}
+
+COMMANDS = {func_hello: 'hello', show_all: 'show all', add_contact: 'add', change_contact: 'change',
+            phone_contact: 'phone', func_exit: ['good buy', 'close', 'exit']}
+
 
 @input_error
 def output_func(user_command):
+    command = user_command['command']
     name = user_command['name']
     phone = user_command['phone']
-    command = user_command['command']
-    for k,v in COMMANDS.items():
+    new_phone = user_command['new_phone']
+    for k, v in COMMANDS.items():
         if command in v:
-            return k(name,phone)
+            return k(name, phone, new_phone)
 
 
-user_input = input('>>>')
-user_command = normalize(user_input)
-while True:
-    result = output_func(user_command)
-    print(result)
-    if result == 'Good bye!':
-        break
+def main():
     user_input = input('>>>')
     user_command = normalize(user_input)
+    while True:
+        result = output_func(user_command)
+        print(result)
+        if result == 'Good bye!':
+            break
+        user_input = input('>>>')
+        user_command = normalize(user_input)
+
+
+if __name__ == '__main__':
+    main()
