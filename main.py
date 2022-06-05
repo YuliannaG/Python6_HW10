@@ -22,22 +22,22 @@ def output_func(user_command):
     command = user_command['command']
     name = user_command['name']
     phone = user_command['phone']
-    new_phone = user_command['new_phone']
+    # new_phone = user_command['new_phone']
     for k, v in COMMANDS.items():
         if command in v:
-            return k(name, phone, new_phone)
+            return k(name, *phone)
 
 
 def main():
-    user_input = input('>>>')
-    user_command = normalize(user_input)
+    # user_input = input('>>>')
+    # user_command = normalize(user_input)
     while True:
+        user_input = input('>>>')
+        user_command = normalize(user_input)
         result = output_func(user_command)
         print(result)
         if result == 'Good bye!':
             break
-        user_input = input('>>>')
-        user_command = normalize(user_input)
 
 
 if __name__ == '__main__':

@@ -34,10 +34,10 @@ class Record(UserDict):
         self.phones = []
         if phone:
             self.phones.append(phone)
-        self.data = {str(self.name): self.phones}
+   #     self.data = {str(self.name): self.phones}
 
     def __repr__(self):
-        return f'{self.name}: {[p.phone for p in self.phones]}'
+        return f'{self.name.name}: {[p.phone for p in self.phones]}'
 
     def add_phone(self, phone: Phone):
         if phone.phone not in [p.phone for p in self.phones]:
@@ -58,11 +58,11 @@ class Record(UserDict):
 
 class AddressBook(UserDict):
 
-    def __init__(self):
-        self.data = {}
+    # def __init__(self):
+    #     self.data = {}
 
     def add_record(self, record: Record):
-        self.data[record.name] = record
+        self.data[record.name.name] = record
 
 
 contacts_dict = AddressBook()
@@ -76,22 +76,26 @@ def add_contact(name, phone, *args):
     name_a = Name(name)
     phone_a = Phone(phone)
     record_a = Record(name_a, phone_a)
-    if name in contacts_dict.data.keys():
-        contacts_dict.data[name].add_phone(Phone(phone))
-        return f'Added new contact for {str(name_a).capitalize()}'
-    else:
-        contacts_dict.add_record(record_a)
-        return f'Contact {str(name_a).capitalize()} added'
-
+    # if name in contacts_dict.data.keys():
+    #     contacts_dict.data[name].add_phone(Phone(phone))
+    #     return f'Added new contact for {str(name_a).capitalize()}'
+    # else:
+    #     contacts_dict.add_record(record_a)
+    #     return f'Contact {str(name_a).capitalize()} added'
+    contacts_dict.add_record(record_a)
+    return f'Contact {str(name_a).capitalize()} added'
 
 def change_contact(name, phone, new_phone):
-    record = contacts_dict[name]  #Record(contacts_dict[name])
-    record.change_phone(Phone(phone), Phone(new_phone))
-    return f'Contact {name} changed to {new_phone}'
+    record = contacts_dict.get(name)
+    print(type(record))
+    if isinstance(record, Record):
+        record.change_phone(Phone(phone), Phone(new_phone))
+        return f'Contact {name} changed number {phone} to number {new_phone}'
+    return f'Sorry, phone book has no entry with name {name}'
 
 
 def phone_contact(name, *args):
-    return f"{name}'s number is {contacts_dict[name.lower()][name.lower()]}"
+    return f"{name}'s numbers are {contacts_dict[name].phones}"
 
 
 def show_all(*args):
@@ -105,17 +109,12 @@ def func_exit(*args):
 
 
 if __name__ == '__main__':
-    name = Name('maria')
-    print(name)
-    phone = Phone('1238495')
-    record_test = Record(name, phone)
-    print(phone)
-    print(func_hello())
-    print(add_contact('maria', phone))
-    print(contacts_dict.keys())
-    print(contacts_dict.values())
-    print(contacts_dict.items())
-    print(contacts_dict.data.keys())
-    print(contacts_dict.data[name])
+    name = 'maria'
+    phone = '44'
+    add_contact(name,phone)
+    name = 'maria'
+    phone = '66'
+    add_contact(name, phone)
+
 
 

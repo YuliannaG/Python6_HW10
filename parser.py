@@ -5,7 +5,7 @@ from handler import *
 
 def normalize(raw_user_input: str) -> dict:
     user_input = raw_user_input.lower().strip()
-    user_command: dict = {'command': None, 'name': None, 'phone': None, 'new_phone': None}
+    user_command: dict = {'command': None, 'name': None, 'phone': []}
 
     if user_input in ['hello', 'show all', 'good buy', 'close', 'exit']:
         user_command['command'] = user_input
@@ -13,8 +13,8 @@ def normalize(raw_user_input: str) -> dict:
         user_input_list = user_input.split()
         user_command['command'] = user_input_list[0]
         user_command['name'] = user_input_list[1]
-        if len(user_input_list) > 2: user_command['phone'] = user_input_list[2]
-        if len(user_input_list) > 3: user_command['new_phone'] = user_input_list[3]
+        if len(user_input_list) > 2: user_command['phone'].append(user_input_list[2])
+        if len(user_input_list) > 3: user_command['phone'].append(user_input_list[3])
 
     return user_command
 
