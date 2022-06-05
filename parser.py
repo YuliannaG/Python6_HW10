@@ -13,8 +13,10 @@ def normalize(raw_user_input: str) -> dict:
         user_input_list = user_input.split()
         user_command['command'] = user_input_list[0]
         user_command['name'] = user_input_list[1]
-        if len(user_input_list) > 2: user_command['phone'].append(user_input_list[2])
-        if len(user_input_list) > 3: user_command['phone'].append(user_input_list[3])
+        if len(user_input_list) > 2:
+            user_command['phone'].append(user_input_list[2])
+        if len(user_input_list) > 3:
+            user_command['phone'].append(user_input_list[3])
 
     return user_command
 
